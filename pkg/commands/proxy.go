@@ -307,6 +307,19 @@ func runProxy(host *config.Host, command string, dryRun bool) error {
 	spawn.Stdout = os.Stdout
 	spawn.Stdin = os.Stdin
 	spawn.Stderr = os.Stderr
+
+	proxyConnectHookArgs := ConnectHookArgs{
+		Host:  host,
+	}
+
+	// OnProxyConnect hook
+	logger().Debug("Calling OnProxyConnect hooks")
+	if drivers, err := host.Hooks.OnProxyConnect.InvokeAll(proxyConnectHookArgs); err != nil {
+		logger().Error("OnProxyConnect hook failed", zap.Error(err))
+	} else {
+		defer drivers.Close()
+	}
+
 	return spawn.Run()
 }
 

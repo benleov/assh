@@ -12,6 +12,7 @@ type HostHooks struct {
 	BeforeConfigWrite hooks.Hooks `yaml:"beforeconfigwrite,omitempty,flow" json:"BeforeConfigWrite,omitempty"`
 	BeforeConnect     hooks.Hooks `yaml:"beforeconnect,omitempty,flow" json:"BeforeConnect,omitempty"`
 	OnConnect         hooks.Hooks `yaml:"onconnect,omitempty,flow" json:"OnConnect,omitempty"`
+	OnProxyConnect    hooks.Hooks `yaml:"onproxyconnect,omitempty,flow" json:"OnProxyConnect,omitempty"`
 	OnConnectError    hooks.Hooks `yaml:"onconnecterror,omitempty,flow" json:"OnConnectError,omitempty"`
 	OnDisconnect      hooks.Hooks `yaml:"ondisconnect,omitempty,flow" json:"OnDisconnect,omitempty"`
 }
@@ -25,7 +26,8 @@ func (hh *HostHooks) Length() int {
 		len(hh.BeforeConnect) +
 		len(hh.OnConnectError) +
 		len(hh.OnDisconnect) +
-		len(hh.OnConnect)
+		len(hh.OnConnect) +
+		len(hh.OnProxyConnect)
 }
 
 // String returns the JSON output
